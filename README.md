@@ -3,7 +3,8 @@ A tutorial on unix systems customization aka ricing.
 
 #### To-do list
 - [ ] nixos os
-- [ ] kitty terminal zsh terminal
+- [ ] kitty terminal with zsh shell
+- [ ] neo vim
 - [ ] hyprland wm
 - [ ] eww widgets
 - [ ] cava (cross platform audio visualizer)
@@ -15,5 +16,3 @@ A tutorial on unix systems customization aka ricing.
 - [ ] wtf
 - [ ] figlet to generate ascii art
 - [ ] betterfox
-- [ ] alacritty
-- [ ] neo vim
