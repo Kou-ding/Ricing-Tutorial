@@ -16,3 +16,4 @@ A tutorial on unix systems customization aka ricing.
 - [ ] wtf
 - [ ] figlet to generate ascii art
 - [ ] betterfox
+- [ ] obsidian (plugins: calendar, dataview, editor syntax highlight, kanban, outlinew, periodic notes, publish, obsidian sync, templater)
