@@ -19,3 +19,7 @@ sudo nixos-rebuild switch
 ```
 4. Copy paste all the necessary config files of this repo inside the corresponding firectories inside ~/.config/name_of_the_app/name_of_the_app.conf
 
+External Sources
+----------------
+- https://github.com/mylinuxforwork/dotfiles
+- 
