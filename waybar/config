@@ -4,7 +4,16 @@
 
 	"modules-left": [
 		"hyprland/workspaces",
-		"custom/right-arrow-dark"
+		"custom/right-arrow-dark",
+    "custom/right-arrow-light",
+    "cpu",
+    "custom/right-arrow-dark",
+    "custom/right-arrow-light",
+    "memory",
+    "custom/right-arrow-dark",
+    "custom/right-arrow-light",
+    "disk",
+    "custom/right-arrow-dark"
 	],
 	"modules-center": [
 		"custom/left-arrow-dark",
@@ -18,23 +27,15 @@
 		"custom/right-arrow-dark"
 	],
 	"modules-right": [
-		"custom/left-arrow-dark",
+    "custom/left-arrow-dark",
+    "network",
+    "custom/left-arrow-light",
+    "custom/left-arrow-dark",
 		"pulseaudio",
 		"custom/left-arrow-light",
 		"custom/left-arrow-dark",
-		"memory",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"cpu",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
 		"battery",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"disk",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"tray"
+    "tray"      
 	],
 
 	"custom/left-arrow-dark": {
@@ -54,7 +55,7 @@
 		"tooltip": false
 	},
 
-	"sway/workspaces": {
+	"hyprland/workspaces": {
 		"disable-scroll": true,
 		"format": "{name}"
 	},
@@ -74,8 +75,8 @@
 
 	"pulseaudio": {
 		"format": "{icon} {volume:2}%",
-		"format-bluetooth": "{icon}  {volume}%",
-		"format-muted": "MUTE",
+		"format-bluetooth": "{icon} {volume}%",
+		"format-muted": "",
 		"format-icons": {
 			"headphones": "",
 			"default": [
@@ -87,15 +88,31 @@
 		"on-click": "pamixer -t",
 		"on-click-right": "pavucontrol"
 	},
-	"memory": {
+  "network": {
+    "format-wifi": " {icon} {signalStrength}% ",
+    "format-ethernet": "󰈀",
+    "format-linked": "",
+    "format-disconnected": "",
+    "tooltip": true,
+    "interval": 5,
+    "format-icons": {
+      "default": [
+        "󰤟",
+        "󰤢",
+        "󰤥",
+        "󰤨"
+      ]
+    }
+  },
+  "memory": {
 		"interval": 5,
-		"format": "Mem {}%"
+		"format": "   {}% "
 	},
 	"cpu": {
 		"interval": 5,
-		"format": "CPU {usage:2}%"
+		"format": " {usage:2}%"
 	},
-	"battery": {
+	"battery": { 
 		"states": {
 			"good": 95,
 			"warning": 30,
@@ -112,7 +129,7 @@
 	},
 	"disk": {
 		"interval": 5,
-		"format": "Disk {percentage_used:2}%",
+		"format": " {percentage_used:2}%",
 		"path": "/"
 	},
 	"tray": {

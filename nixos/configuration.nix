@@ -10,7 +10,7 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader
+  ############ Bootloader ############
   # Default Bootloader
   #boot.loader.systemd-boot.enable = true;
   # Grub Bootloader
@@ -21,31 +21,69 @@
     useOSProber = true;
   };
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
  
-  # sddm Desktop manager
+  ####### Login manager ########
+  # Enables the X11 windowing system
   services.xserver.enable = true;
-  services.displayManager.sddm = {
+  # Minimal login screen that launches Hyprland on start up
+  # Hyprland executes hyprlock and make it our login screen
+  services.greetd = {
     enable = true;
-    theme = "${import ./sddm-theme.nix { inherit pkgs; }}";
-  };
+    restart = false;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "kou";
+      };
+      initial_session = {
+        command = "Hyprland";
+        user = "kou";
+      };
+    };
+  }; 
 
-  # KDE Plasma Display manager
-  #services.desktopManager.plasma6.enable = true;
-  #services.displayManager.defaultSession = "plasma";
- 
-  # Hyprland Window Manager
+  ######### Lock screen ##########
+  # Hyperlock
+  programs.hyprlock.enable = true;
+
+  ######## Window Manager ########
+  # Hyprland
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-  }; 
+  };
+
+  ########### Fonts ############
+  # While the fonts were installed in the system packages list 
+  # they have to be here too for the system apps to be able to utilize them.
+  # Fonts help render certain icons, emojis, text, etc...
+  fonts.packages = with pkgs; [
+    nerdfonts
+  ];
+  
+  ########## Theme #########
+  qt.enable = true;
+  qt.platformTheme = "gnome";
+  qt.style = "adwaita-dark";
+  # Force Adwaita Dark for GNOME applications
+  environment.sessionVariables.GTK_THEME = "Adwaita:dark";
+
+  # Desktop portals handle program interactions, screensharing, link opening, file opening etc...
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+ 
+  ######## Basic configuration ########
+  # The same stuff someone would choose inside an installer
+  # hostname
+  networking.hostName = "nixos"; # Define your hostname.
+
+  # Enables wireless support via wpa_supplicant.
+  # networking.wireless.enable = true; 
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -72,69 +110,87 @@
     layout = "us";
     variant = "";
   };
-
+  ############### User ##################
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kou = {
     isNormalUser = true;
     description = "kou";
     shell = pkgs.bash;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "video" "input" "wheel" ];
     packages = with pkgs; [];
   };
- 
+
+  ################## Packages #####################
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # Enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # Applications 
-    firefox-wayland # browser
-    obsidian # markdown notes
-    vscode # ide
-    gimp # image editor
-    vlc # video and audio playback
-    libreoffice # office
+    # Basic Applications 
+    firefox # Browser
+    xfce.thunar # File explorer
+    swappy # Image Viewer
 
-    # kde apps
-    kdePackages.gwenview # image viewer
-    kdePackages.dolphin # file manager
+    # Optional Applications
+    obsidian # Markdown notes
+    vscode # IDE
+    gimp # Image Editor
+    vlc # Video and Audio Playback
+    libreoffice # Office
+    stremio # Movies and Tv-series
     kdePackages.kdenlive # video editor
+    discord # messaging
+    qbittorrent # torrenting
 
     # Ricing
     hyprland # windows manager
     hyprpaper # wallpaper deamon
+    hyprlock # lock screen
     rofi-wayland # app launcher
     waybar # top bar
     pamixer # audio mixer for waybar
     pavucontrol # audio options
     kitty # terminal
     neovim # editor
+    nerdfonts # fonts
+    bibata-cursors # cursor theme
     adwaita-qt # theme
     
-       
-    # Fun packages
+    # Fun packages 
     figlet # ascii wordart
     neofetch # os details
     btop # resource monitor
     htop # process viewer
+    pipes # terminal script
+    cbonsai # terminal script
+    gomatrix # terminal script
+    cava # terminal audio visualizer
 
-    #Utility Apps
-    home-manager
+    # Utility Applications
     wget # download from command line
     git # version control
     dunst # notification deamon, dunst is x11 + wayland, mako is pure wayland
+    wl-clipboard # clipboard
+    grim # screenshot dep 1
+    slurp # screenshot dep 2
     libnotify # dependency of notification deamon
     os-prober # for dual booting
     libsForQt5.qt5.qtquickcontrols2 # sddm dep 1
     libsForQt5.qt5.qtgraphicaleffects # sddm dep 2
-    gptfdisk
+    gptfdisk # gpt disk tool
+    gcc14 # C programming language
+
+    libsForQt5.sddm-kcm
+    gtk3  # For Adwaita theme
+    gnome.adwaita-icon-theme # The Adwaita theme icons 
+    gsettings-desktop-schemas # settings for gnome applications
+    greetd.greetd # simple login manager
+    greetd.tuigreet # simple login manager
+    nwg-look # gtk theme picker, mainly for selecting a cursor out of all the downloaded ones
   ];
   
-  # make sure waybar works
+  # Override Attributes making sure waybar works
   nixpkgs.overlays = [
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
@@ -143,30 +199,7 @@
     })
   ];
 
-  # Fonts to render certain text
-  fonts.packages = with pkgs; [
-    font-awesome
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
-  ];
-  
-  # Theme
-  qt.enable = true;
-  qt.platformTheme = "qt5ct";
-  #qt.platformTheme.name= "gtk";
-  qt.style = "adwaita-dark";
- 
-  # Desktop portals handle program interactions, screensharing, link opening, file opening etc...
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
-
+  ############# Sound #############
   # Enable sound with pipewire
   # sound.enable = true; # no longer needed
   hardware.pulseaudio.enable = false;
@@ -187,17 +220,18 @@
   #   enableSSHSupport = true;
   # };
 
-  # List services that you want to enable:
-
+  ########## Services ##########
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-
+  
+  ######### Firewall ##########
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
+  
+  ######################### NIXOS VERSION ##########################
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

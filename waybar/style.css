@@ -23,6 +23,7 @@ window#waybar {
 #clock.2,
 #clock.3,
 #pulseaudio,
+#network,
 #memory,
 #cpu,
 #battery,
@@ -51,6 +52,9 @@ window#waybar {
 #pulseaudio {
 	color: #268bd2;
 }
+#network {
+  color: #1dec65;
+}
 #memory {
 	color: #2aa198;
 }
@@ -66,6 +70,7 @@ window#waybar {
 
 #clock,
 #pulseaudio,
+#network
 #memory,
 #cpu,
 #battery,
