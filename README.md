@@ -83,7 +83,10 @@ sudo chmod +x setup.sh
 ./setup.sh # type y (yes) to all
 
 # The colors can be edited here
-gedit ~/.config/synth-shell/synth-shell-prompt.config
+nvim ~/.config/synth-shell/synth-shell-prompt.config
+
+# The greeter message can be replaced by neofetch here
+nvim ~/.bashrc
 ```
 
 Lazyvim installation:
@@ -94,6 +97,7 @@ git clone https://github.com/LazyVim/starter ~/.config/nvim
 rm -rf ~/.config/nvim/.git 
 # Launch nvim to complete the installation
 nvim
+
 ```
 
 External Sources
