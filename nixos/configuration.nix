@@ -24,6 +24,8 @@
  
   ####### Login manager ########
   # Enables the X11 windowing system
+  # Since we are using Hyprland WM which uses wayland 
+  # we don't have to enable x11.
   services.xserver.enable = true;
   # Minimal login screen that launches Hyprland on start up
   # Hyprland executes hyprlock and make it our login screen
@@ -156,6 +158,12 @@
     nerdfonts # fonts
     bibata-cursors # cursor theme
     adwaita-qt # theme
+    gtk3  # For Adwaita theme
+    adwaita-icon-theme # The Adwaita theme icons 
+    gsettings-desktop-schemas # settings for gnome applications
+    greetd.greetd # simple login manager
+    greetd.tuigreet # simple login manager
+    nwg-look # gtk theme picker, mainly for selecting a cursor out of all the downloaded ones
     
     # Fun packages 
     figlet # ascii wordart
@@ -180,14 +188,6 @@
     libsForQt5.qt5.qtgraphicaleffects # sddm dep 2
     gptfdisk # gpt disk tool
     gcc14 # C programming language
-
-    libsForQt5.sddm-kcm
-    gtk3  # For Adwaita theme
-    gnome.adwaita-icon-theme # The Adwaita theme icons 
-    gsettings-desktop-schemas # settings for gnome applications
-    greetd.greetd # simple login manager
-    greetd.tuigreet # simple login manager
-    nwg-look # gtk theme picker, mainly for selecting a cursor out of all the downloaded ones
   ];
   
   # Override Attributes making sure waybar works
