@@ -52,9 +52,9 @@ sudo nixos-rebuild switch
 >Like this: ~/.config/name_of_the_app/name_of_the_app.conf
 
 #### Note !: There are some parts of the configuration files that need altering for the rice to work.
-- hyprland: monitors
-- hyprpaper: wallpaper directory, monitors
-- hyprlock: wallpaper directory and image directory
+- hyprland: Monitors. Even though I have set them to configure automatically, people with multiple screens might need to swap them around through the config file.
+- hyprpaper: Wallpaper directory, Monitors. 
+- hyprlock: Wallpaper directory, Image directory.
 - nix config: the "Basic configuration" and the "User" sections of the file. ( You can keep the ones nixos generated during your graphical nixos installation )
 
 
@@ -73,7 +73,34 @@ nmcli connection delete "SSID"
 nmcli dev wifi connect "SSID" password 'password'
 ```
 
+### Extra polishing 
+Beautifying the bash shell:
+```bash
+# beautiful shell installation
+git clone --recursive https://github.com/andresgongora/synth-shell.git
+cd synth-shell
+sudo chmod +x setup.sh
+./setup.sh # type y (yes) to all
+
+# The colors can be edited here
+gedit ~/.config/synth-shell/synth-shell-prompt.config
+```
+
+Lazyvim installation:
+```bash 
+# Clones the lazyvim repository inside the nvim config folder
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+# Removes the .git folder
+rm -rf ~/.config/nvim/.git 
+# Launch nvim to complete the installation
+nvim
+```
+
 External Sources
 ----------------
 - https://github.com/mylinuxforwork/dotfiles
+- https://www.linuxfordevices.com/tutorials/linux/beautify-bash-shell
+- https://www.lazyvim.org/installation
+- https://github-wiki-see.page/m/Alexays/Waybar/wiki/Examples
+- https://github.com/cjbassi/config/tree/master/.config/waybar
 - 
