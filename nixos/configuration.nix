@@ -188,6 +188,8 @@
     libsForQt5.qt5.qtgraphicaleffects # sddm dep 2
     gptfdisk # gpt disk tool
     gcc14 # C programming language
+    bc # synth shell dependency
+    lm_sensors # synth shell dependency, read cpu temperatures
   ];
   
   # Override Attributes making sure waybar works
