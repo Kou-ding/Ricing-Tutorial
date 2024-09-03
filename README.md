@@ -14,7 +14,7 @@ Using them we can specify application settings as well. That way our system can 
 
 ### To do list
 - [ ] Test if the command line only version works.
-- [ ] Create an automatic installer
+- [X] Create an automatic installer
 - [ ] Create a flakes tutorial
 
 ### Automatic installation
@@ -24,9 +24,21 @@ Using them we can specify application settings as well. That way our system can 
 _______________________________________________|
 ```
 1. Install nixos via the graphical installer
-2. git clone repo
-3. cd /repository
-4. run the sysconfig.sh script
+2. git clone repo using the command:
+```bash
+nix-shell -p git
+git clone https://github.com/Kou-ding/Ricing-Tutorial.git
+```
+3. Navigate to the folder:
+```bash
+cd Ricing-Tutorial/
+```
+4. Copy and paste the appropriate config file you want inside of /etc/nixos/
+> make sure to rename it into configuration.nix and delete the existing one.
+5. Excute the 2 scripts in this order: 1. first.sh -> 2. second.sh
+> The first shell script will ask which components of the synth shell you want to install. I recommend to say yes(y) only to the 
+**synth-shell-prompt**.
+> I have also included two useful aliases as well as a start-up script, running neofetch every time a new terminal window launches, inside the .config/.bashrc file.
 ```
 _______
        |
@@ -59,12 +71,12 @@ sudo nixos-rebuild switch
 
 
 ### Networking configuration peculiarities
-The network manager works but I haven't implemented any network selecting interface. If you are using ethernet you are set to go. If you are using wifi however here is a quick tutorial on how to connect to your network:
+In case the xfce network selecting interface doesn't work I have written this small tutorial on manual configuration. If you are using ethernet you are set to go. If you are using wifi however here is how you connect to your network:
 ```bash
 # Spot the network you want to connect to
-nmcli connection show
+nmcli device wifi list
 # Connect to the network
-nmcli dev wifi connect "SSID" password 'password'
+nmcli device wifi connect "SSID" password 'password'
 # If the connection isn't successful, the network might already be in the list of connected networks
 nmcli connection show
 # If you see that's the case then delete the connection
@@ -74,13 +86,13 @@ nmcli dev wifi connect "SSID" password 'password'
 ```
 
 ### Extra polishing 
-Beautifying the bash shell:
+Beautiful bash shell:
 ```bash
 # beautiful shell installation
 git clone --recursive https://github.com/andresgongora/synth-shell.git
 cd synth-shell
 sudo chmod +x setup.sh
-./setup.sh # type y (yes) to all
+./setup.sh
 
 # The colors can be edited here
 nvim ~/.config/synth-shell/synth-shell-prompt.config
@@ -107,4 +119,3 @@ External Sources
 - https://www.lazyvim.org/installation
 - https://github-wiki-see.page/m/Alexays/Waybar/wiki/Examples
 - https://github.com/cjbassi/config/tree/master/.config/waybar
-- 
