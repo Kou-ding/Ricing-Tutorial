@@ -13,18 +13,13 @@ This notion or reproducability can be further expanded by the introduction of th
 Using them we can specify application settings as well. That way our system can be entirely reproducible. I am not yet really well acquanted with these two so I will be following a method of ricing.
 
 ### To do list
-- [ ] Test if the command line only version works.
+- [X] Test if the command line only version works.
 - [X] Create an automatic installer
 - [ ] Create a flakes tutorial
 
 ### Automatic installation
-> To be implemented in the future. For now skip to the manual installation 
-```
-                                               |    
-_______________________________________________|
-```
-1. Install nixos via the graphical installer
-2. git clone repo using the command:
+1. Install nixos via the graphical installer, preferably the gnome recommended installer.
+2. Clone the repository using the command:
 ```bash
 nix-shell -p git
 git clone https://github.com/Kou-ding/Ricing-Tutorial.git
@@ -39,11 +34,7 @@ cd Ricing-Tutorial/
 > The first shell script will ask which components of the synth shell you want to install. I recommend to say yes(y) only to the 
 **synth-shell-prompt**.
 > I have also included two useful aliases as well as a start-up script, running neofetch every time a new terminal window launches, inside the .config/.bashrc file.
-```
-_______
-       |
-       v
-```
+
 ### Manual installation 
 1. Install nixos via the graphical installer
 2. Adding the unstable packages channel.
