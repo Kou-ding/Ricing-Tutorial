@@ -19,47 +19,70 @@ Using them we can specify application settings as well. That way our system can 
 
 ### Automatic installation
 1. Install nixos via the graphical installer, preferably the gnome recommended installer.
-2. Clone the repository using the command:
+
+2. In the desktop selection screen choose: _No Desktop_. And reboot after the installation is over.
+
+3. Log in and clone the repository using the command:
 ```bash
 nix-shell -p git
 git clone https://github.com/Kou-ding/Ricing-Tutorial.git
 ```
-3. Navigate to the folder:
+
+4. Navigate to the folder:
 ```bash
 cd Ricing-Tutorial/
 ```
-4. Copy and paste the appropriate config file you want inside of /etc/nixos/
-> make sure to rename it into configuration.nix and delete the existing one.
-5. Excute the 2 scripts in this order: 1. first.sh -> 2. second.sh
-> The first shell script will ask which components of the synth shell you want to install. I recommend to say yes(y) only to the 
-**synth-shell-prompt**.
-> I have also included two useful aliases as well as a start-up script, running neofetch every time a new terminal window launches, inside the .config/.bashrc file.
 
-### Manual installation 
-1. Install nixos via the graphical installer
-2. Adding the unstable packages channel.
-```bash
-# view your current channels
-sudo nix-channel --list
-# add unstable channel
-sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
-# update the system channels
-sudo nix-channel --update
+5. Copy these parameters from your configuration file to replace the corresponding ones inside the configuration file you choose to go with from the Ricing-Tutorial/nixos/ configuration file selection.
+```nix
+  # Set your time zone.
+  time.timeZone = "Europe/Athens";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "C.UTF-8";
+    LC_IDENTIFICATION = "C.UTF-8";
+    LC_MEASUREMENT = "C.UTF-8";
+    LC_MONETARY = "C.UTF-8";
+    LC_NAME = "C.UTF-8";
+    LC_NUMERIC = "C.UTF-8";
+    LC_PAPER = "C.UTF-8";
+    LC_TELEPHONE = "C.UTF-8";
+    LC_TIME = "C.UTF-8";
+  };
+  users.users.kou = {
+    isNormalUser = true;
+    description = "kou";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+    ];
+  };
 ```
-3. Copy paste the configuration.nix file inside the correct folder (/etc/nixos/configuration.nix)
-4. run:
+
+6. Copy and paste the now edited config file inside of /etc/nixos/
+```bash
+sudo cp /nixos/configuration.nix /etc/nixos/
+```
+> make sure to rename configuration_gnome.nix or configuration_purehyprland.nix into configuration.nix if you choose to go with one of those.
+
+7. Build the new system.
 ```bash
 sudo nixos-rebuild switch
 ```
-5. There is a directory in which every program saves the user data responsible for customizing the appearence and function of these programs. This directory is "~/.config/". Copy paste all the necessary config files of this repo inside the corresponding program sub-directories.
->Like this: ~/.config/name_of_the_app/name_of_the_app.conf
 
-#### Note !: There are some parts of the configuration files that need altering for the rice to work.
-- hyprland: Monitors. Even though I have set them to configure automatically, people with multiple screens might need to swap them around through the config file.
+8. Excute the sysconf.sh script to configure the applications we have installed through their corresponding .conf files.
+**$${\color{red}Note !}$$**
+There are some parts of the configuration files that need altering before you execute the script.
+- hyprland: Monitors. Comment my monitors and uncomment the default monitors configuration.
 - hyprpaper: Wallpaper directory, Monitors. 
 - hyprlock: Wallpaper directory, Image directory.
-- nix config: the "Basic configuration" and the "User" sections of the file. ( You can keep the ones nixos generated during your graphical nixos installation )
+> The shell script will ask which components of the synth shell you want to install. I recommend to say yes(y) only to the **synth-shell-prompt**.
 
+9. (Optional) Bash welcome screen and aliases: I have also included two useful aliases, as well as a start-up script running neofetch every time a new terminal window launches, inside the .config/.bashrc file. Include them inside your ~/.bashrc file to make use of them.
+
+10. Reboot and enjoy :)
 
 ### Networking configuration peculiarities
 In case the xfce network selecting interface doesn't work I have written this small tutorial on manual configuration. If you are using ethernet you are set to go. If you are using wifi however here is how you connect to your network:
