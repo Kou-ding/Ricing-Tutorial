@@ -1,7 +1,27 @@
 # Nixos Cheatsheet
 
-### Configuration file directories
+### Update and upgrade
 ```bash
+######### UPDATE ##########
+# edit the configuration file
+# is to keep the lazyvim installation active
+sudo -E nvim /etc/nixos/configuration.nix
+# finzlize the changes and switch to the new build
+sudo nixos-rebuild switch
+
+######### UPGRADE ##########
+# change to the new channel
+sudo nix-channel --add https://channels.nixos.org/nixos-new_version nixos
+# upgrade to it
+# in one command
+sudo nixos-rebuild switch --upgrade
+# or in multiple commands
+sudo nix-channel --update nixos
+sudo nixos-rebuild switch
+```
+
+### Configuration file directories
+```
 ~/.zshrc
 ~/.config/kitty/kitty.conf
 ~/.config/hypr/hyprland.conf
