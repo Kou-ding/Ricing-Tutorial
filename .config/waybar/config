@@ -4,56 +4,18 @@
 
 	"modules-left": [
 		"hyprland/workspaces",
-		"custom/right-arrow-dark",
-    "custom/right-arrow-light",
-    "cpu",
-    "custom/right-arrow-dark",
-    "custom/right-arrow-light",
-    "memory",
-    "custom/right-arrow-dark",
-    "custom/right-arrow-light",
-    "disk",
-    "custom/right-arrow-dark"
-	],
-	"modules-center": [
-		"custom/left-arrow-dark",
-		"clock#1",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
-		"clock#2",
-		"custom/right-arrow-dark",
-		"custom/right-arrow-light",
-		"clock#3",
-		"custom/right-arrow-dark"
+		"cpu",
+		"memory",
+		"disk"
 	],
 	"modules-right": [
-    "custom/left-arrow-dark",
-    "network",
-    "custom/left-arrow-light",
-    "custom/left-arrow-dark",
+		"tray",
 		"pulseaudio",
-		"custom/left-arrow-light",
-		"custom/left-arrow-dark",
 		"battery",
-    "tray"      
+		"clock#1",
+		"clock#2",
+		"clock#3"     
 	],
-
-	"custom/left-arrow-dark": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/left-arrow-light": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/right-arrow-dark": {
-		"format": "",
-		"tooltip": false
-	},
-	"custom/right-arrow-light": {
-		"format": "",
-		"tooltip": false
-	},
 
 	"hyprland/workspaces": {
 		"disable-scroll": true,
@@ -65,11 +27,11 @@
 		"tooltip": false
 	},
 	"clock#2": {
-		"format": "{:%H:%M}",
+		"format": "{:%d-%m}",
 		"tooltip": false
 	},
 	"clock#3": {
-		"format": "{:%d-%m}",
+		"format": "{:%H:%M}",
 		"tooltip": false
 	},
 
@@ -88,25 +50,9 @@
 		"on-click": "pamixer -t",
 		"on-click-right": "pavucontrol"
 	},
-  "network": {
-    "format-wifi": " {icon} {signalStrength}% ",
-    "format-ethernet": "󰈀",
-    "format-linked": "",
-    "format-disconnected": "",
-    "tooltip": true,
-    "interval": 5,
-    "format-icons": {
-      "default": [
-        "󰤟",
-        "󰤢",
-        "󰤥",
-        "󰤨"
-      ]
-    }
-  },
-  "memory": {
+    "memory": {
 		"interval": 5,
-		"format": "   {}% "
+		"format": " {}%"
 	},
 	"cpu": {
 		"interval": 5,
