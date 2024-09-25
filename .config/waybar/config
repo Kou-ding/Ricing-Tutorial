@@ -10,6 +10,7 @@
 	],
 	"modules-right": [
 		"tray",
+		"network",
 		"pulseaudio",
 		"battery",
 		"clock#1",
@@ -34,7 +35,22 @@
 		"format": "{:%H:%M}",
 		"tooltip": false
 	},
-
+	"network": {
+		"format-wifi": " {icon} {signalStrength}% ",
+		"format-ethernet": "󰈀",
+		"format-linked": "",
+		"format-disconnected": "",
+		"tooltip": true,
+		"interval": 5,
+		"format-icons": {
+		  "default": [
+			"󰤟",
+			"󰤢",
+			"󰤥",
+			"󰤨"
+		  ]
+		}
+	},
 	"pulseaudio": {
 		"format": "{icon} {volume:2}%",
 		"format-bluetooth": "{icon} {volume}%",
