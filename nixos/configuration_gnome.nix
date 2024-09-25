@@ -1,4 +1,4 @@
-## Edit this configuration file to define what should be installed on
+# Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
@@ -22,6 +22,7 @@
 
   # Hostname
   networking.hostName = "nixos"; # Define your hostname.
+  
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -50,32 +51,29 @@
   };
 
   # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-
+  
   # Enable the gnome Desktop Environment and the gdm Display Manager
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
+
+  # Set hyprland as the defauly session
+  services.displayManager.defaultSession = "hyprland";
+
   ######## Window Manager ########
   # Hyprland
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-  };   
-
-  ######### Lock screen ##########
-  # Hyperlock
-  programs.hyprlock.enable = true;
-
-  ########## Theme #########
-  qt = {
-    enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
   };
-  # Force Adwaita Dark for GNOME applications
-  #environment.sessionVariables.GTK_THEME = "Adwaita:dark";
-  
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
   ########### Fonts ############
   # While the fonts were installed in the system packages list 
   # they have to be here too for the system apps to be able to utilize them.
@@ -83,16 +81,12 @@
   fonts.packages = with pkgs; [
     nerdfonts
   ];
-  
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
+ 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # if you use pulseaudio with xfce
+  nixpkgs.config.pulseaudio = true;
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -116,23 +110,22 @@
   users.users.kou = {
     isNormalUser = true;
     description = "kou";
-    shell = pkgs.bash;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      
     ];
   };
-
+   
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # Basic Applications 
+    # Applications 
     firefox # Browser
-    thunderbird # Mail 
-
-    # Optional Applications
+    librewolf # Hardened browser
+    thunderbird # Mail
     obsidian # Markdown notes
     vscode # IDE
     gimp # Image Editor
@@ -142,6 +135,17 @@
     kdePackages.kdenlive # video editor
     discord # messaging
     qbittorrent # torrenting
+    filezilla # file access through ssh 
+    flatpak # sandboxed applications 
+    localsend # file sharing through wifi
+    xournal # note-taking pdf annotating
+
+    # Gaming
+    steam # steam platform for games
+    retroarch # retro console emulation
+    goverlay # gui mangohud editing
+    mangohud # fps temps etc
+    virtualbox # pc emulation
 
     # Ricing
     hyprland # windows manager
@@ -155,8 +159,9 @@
     neovim # editor
     nerdfonts # fonts
     bibata-cursors # cursor theme
-    nwg-look # gtk theme picker, mainly for selecting a cursor out of all the downloaded ones
-    
+    orchis-theme # desktop theme
+    papirus-icon-theme # icon theme
+
     # Fun packages 
     figlet # ascii wordart
     neofetch # os details
@@ -170,8 +175,8 @@
     # Utility Applications
     wget # download from command line
     git # version control
+    unzip # unzipper
     dunst # notification deamon, dunst is x11 + wayland, mako is pure wayland
-    pulseaudio # paplay to play a notification sound
     wl-clipboard # clipboard
     grim # screenshot dep 1
     slurp # screenshot dep 2
@@ -182,8 +187,7 @@
     bc # synth shell dependency
     lm_sensors # synth shell dependency, read cpu temperatures
   ];
-  
-  # Override Attributes making sure waybar works
+
   nixpkgs.overlays = [
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
