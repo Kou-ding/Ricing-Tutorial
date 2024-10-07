@@ -146,6 +146,7 @@
     goverlay # gui mangohud editing
     mangohud # fps temps etc
     virtualbox # pc emulation
+    cpu-x # cpu info
 
     # Ricing
     hyprland # windows manager
